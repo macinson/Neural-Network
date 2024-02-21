@@ -30,7 +30,7 @@ Vector Vector::operator+(Vector other) {
     for (int i = 0; i < this->components.size(); i++) {
         res.push_back(other.getComponents().at(i) + this->components.at(i));
     }
-    return {res};
+    return Vector(res);
 }
 
 Vector Vector::operator*(double scalar) {
@@ -39,5 +39,5 @@ Vector Vector::operator*(double scalar) {
     for (double component : this->components) {
         res.push_back(component * scalar);
     }
-    return {res};
+    return Vector(res);
 }

@@ -13,7 +13,7 @@ class Vector {
 private:
     vector<double> components;
 public:
-    Vector(vector<double> components);
+    explicit Vector(vector<double> components);
     vector<double> getComponents(){return components;}
     double operator * (Vector other);
     Vector operator + (Vector other);
