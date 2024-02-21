@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(cpp main.cpp
         Common/Vector.cpp
-        Common/Vector.h)
+        Common/Vector.h
+        Common/Matrix.cpp
+        Common/Matrix.h)
