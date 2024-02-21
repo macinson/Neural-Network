@@ -18,6 +18,7 @@ private:
 public:
     explicit Matrix(vector<Vector> columns);
     Vector operator * (Vector v);
+    bool empty();
 };
 
 

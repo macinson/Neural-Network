@@ -5,7 +5,7 @@
 #include "Matrix.h"
 
 Matrix::Matrix(vector<Vector> columns) : columns{columns}, n{static_cast<int>(columns.size())} {
-    m = (columns.size() == 0) ? 0 : columns.at(0).getComponents().size();
+    m = (columns.empty()) ? 0 : columns.at(0).getComponents().size();
 }
 
 Vector Matrix::operator*(Vector v) {
@@ -17,4 +17,8 @@ Vector Matrix::operator*(Vector v) {
         res = res + columns.at(i) * v.getComponents().at(i);
     }
     return res;
+}
+
+bool Matrix::empty() {
+    return columns.empty();
 }
