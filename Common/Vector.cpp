@@ -23,3 +23,21 @@ string Vector::toString() {
     }
     return res;
 }
+
+Vector Vector::operator+(Vector other) {
+    vector<double> res;
+    res.reserve(this->components.size());
+    for (int i = 0; i < this->components.size(); i++) {
+        res.push_back(other.getComponents().at(i) + this->components.at(i));
+    }
+    return {res};
+}
+
+Vector Vector::operator*(double scalar) {
+    vector<double> res;
+    res.reserve(this->components.size());
+    for (double component : this->components) {
+        res.push_back(component * scalar);
+    }
+    return {res};
+}

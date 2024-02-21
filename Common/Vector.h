@@ -16,6 +16,8 @@ public:
     Vector(vector<double> components);
     vector<double> getComponents(){return components;}
     double operator * (Vector other);
+    Vector operator + (Vector other);
+    Vector operator * (double scalar);
     string toString();
 };
 
