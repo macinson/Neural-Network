@@ -5,6 +5,7 @@
 #include "Vector.h"
 
 #include <utility>
+#include <algorithm>
 
 Vector::Vector(vector<double> components) : components{std::move(components)} {}
 
@@ -39,5 +40,12 @@ Vector Vector::operator*(double scalar) {
     for (double component : this->components) {
         res.push_back(component * scalar);
     }
+    return Vector(res);
+}
+
+Vector Vector::ReLU() {
+    vector<double> res;
+    res.reserve(components.size());
+    for(double d : components) res.push_back(max(0.0,d));
     return Vector(res);
 }

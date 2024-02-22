@@ -19,6 +19,7 @@ public:
     Vector operator + (Vector other);
     Vector operator * (double scalar);
     string toString();
+    Vector ReLU();
 };
 
 

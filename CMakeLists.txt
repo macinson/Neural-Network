@@ -7,4 +7,6 @@ add_executable(cpp main.cpp
         Common/Vector.cpp
         Common/Vector.h
         Common/Matrix.cpp
-        Common/Matrix.h)
+        Common/Matrix.h
+        "Neural network components/Layer.cpp"
+        "Neural network components/Layer.h")
