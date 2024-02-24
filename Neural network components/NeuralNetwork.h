@@ -17,8 +17,8 @@ private:
     vector<Matrix> weights;
     Vector last = Vector({});
 public:
-    NeuralNetwork(vector<Vector> biases, vector<Matrix> weights,Vector last);
-    int output(Vector input);
+    NeuralNetwork(vector<Vector> biases, vector<Matrix> weights);
+    Vector output(Vector input);
 };
 
 

@@ -4,15 +4,15 @@
 
 #include "NeuralNetwork.h"
 
-NeuralNetwork::NeuralNetwork(vector<Vector> biases, vector<Matrix> weights, Vector last) {
+NeuralNetwork::NeuralNetwork(vector<Vector> biases, vector<Matrix> weights) {
     this->biases = std::move(biases);
     this->weights = std::move(weights);
     this->last = std::move(last);
 }
 
-int NeuralNetwork::output(Vector input) {
+Vector NeuralNetwork::output(Vector input) {
     for(int i = 0; i < weights.size(); i++){
         input = (weights.at(i)*input + biases.at(i)).ReLU();
     }
-    return input * last;
+    return input;
 }

@@ -22,3 +22,13 @@ Vector Matrix::operator*(Vector v) {
 bool Matrix::empty() {
     return columns.empty();
 }
+
+Vector Matrix::toVector() {
+    if (m != 1) return Vector({});
+    vector<double> comp;
+    comp.reserve(columns.size());
+    for (Vector c: columns) {
+        comp.push_back(c.getComponents().at(0));
+    }
+    return Vector(comp);
+}
