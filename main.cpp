@@ -7,10 +7,10 @@
 using namespace std;
 
 int main() {
-    NeuralNetwork XOR({Vector({0,-1})},{Matrix({Vector({1, 1}), Vector({1,1})})} ,Vector({1, -2}));
-    cout << XOR.output(Vector({0,0})) << endl;
-    cout << XOR.output(Vector({1,0})) << endl;
-    cout << XOR.output(Vector({0,1})) << endl;
-    cout << XOR.output(Vector({1,1})) << endl;
+    NeuralNetwork XOR({Vector({0,-1}),Vector({0,0})},{Matrix({Vector({1, 1}), Vector({1,1})}),Matrix({Vector({1}), Vector({-2})})});
+    cout << XOR.output(Vector({0,0})).getComponents().at(0) << endl;
+    cout << XOR.output(Vector({1,0})).getComponents().at(0) << endl;
+    cout << XOR.output(Vector({0,1})).getComponents().at(0) << endl;
+    cout << XOR.output(Vector({1,1})).getComponents().at(0) << endl;
     return 0;
 }
