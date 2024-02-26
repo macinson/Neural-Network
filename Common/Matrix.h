@@ -20,6 +20,7 @@ public:
     Vector operator * (Vector v);
     bool empty();
     Vector toVector();
+    string toString();
 };
 
 

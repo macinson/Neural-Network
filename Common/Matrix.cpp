@@ -32,3 +32,28 @@ Vector Matrix::toVector() {
     }
     return Vector(comp);
 }
+
+string Matrix::toString() {
+    string result = "";
+    if(m == 1){
+        result += "( ";
+        for(int i = 0; i < n; i++){
+            result += to_string(columns.at(i).getComponents().at(0)) + " ";
+        }
+        result += ")";
+    }
+    else{
+        for(int i = 0; i < m; i++){
+            if(i == 0) result += "/ ";
+            else if(i ==m-1) result +="\\ ";
+            else result +="| ";
+            for(int j = 0; j < n; j++){
+                result += to_string(columns.at(j).getComponents().at(i)) + " ";
+            }
+            if(i == 0) result += "\\\n";
+            else if(i ==m-1) result +="/\n";
+            else result +="|\n";
+        }
+    }
+    return result;
+}
