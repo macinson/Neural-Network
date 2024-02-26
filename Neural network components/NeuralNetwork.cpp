@@ -17,6 +17,6 @@ Vector NeuralNetwork::output(Vector input) {
     return input;
 }
 
-void NeuralNetwork::backProp() {
+void NeuralNetwork::backProp(int iterations) {
 
 }

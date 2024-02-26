@@ -19,7 +19,7 @@ private:
 public:
     NeuralNetwork(vector<Vector> biases, vector<Matrix> weights);
     Vector output(Vector input);
-    void backProp();
+    void backProp(int iterations);
 };
 
 

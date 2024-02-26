@@ -10,4 +10,6 @@ add_executable(cpp main.cpp
         Common/Matrix.h
         "Neural network components/NeuralNetwork.cpp"
         "Neural network components/NeuralNetwork.h"
+        "Neural network components/TrainingSet.cpp"
+        "Neural network components/TrainingSet.h"
 )
