@@ -1,5 +1,4 @@
 # cpp
-My collection of C++ projects
-
- 1 . Neural network app 
+My own neural network implementation in C++
+ 
  
