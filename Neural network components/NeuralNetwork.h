@@ -7,6 +7,7 @@
 #include <vector>
 #include "../Common/Vector.h"
 #include "../Common/Matrix.h"
+#include "TrainingSet.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ private:
 public:
     NeuralNetwork(vector<Vector> biases, vector<Matrix> weights);
     Vector output(Vector input);
-    void backProp(int iterations);
+    void backProp(int iterations, TrainingSet trainingSet);
 };
 
 

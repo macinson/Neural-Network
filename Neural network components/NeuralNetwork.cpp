@@ -3,6 +3,7 @@
 //
 
 #include "NeuralNetwork.h"
+#include "TrainingSet.h"
 
 NeuralNetwork::NeuralNetwork(vector<Vector> biases, vector<Matrix> weights) {
     this->biases = std::move(biases);
@@ -17,6 +18,6 @@ Vector NeuralNetwork::output(Vector input) {
     return input;
 }
 
-void NeuralNetwork::backProp(int iterations) {
+void NeuralNetwork::backProp(int iterations, TrainingSet trainingSet) {
 
 }
