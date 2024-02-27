@@ -14,4 +14,6 @@ add_executable(cpp main.cpp
         "Neural network components/TrainingSet.h"
         Common/UsefulMethods.cpp
         Common/UsefulMethods.h
+        "Neural network components/Layer.cpp"
+        "Neural network components/Layer.h"
 )
