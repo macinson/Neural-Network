@@ -9,6 +9,7 @@
 
 using namespace std;
 
+//for some methods I may need while making this project
 class UsefulMethods {
 public:
     static string doubleToString(double d, int precision);
