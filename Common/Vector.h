@@ -20,6 +20,7 @@ public:
     Vector operator * (double scalar);
     string toString();
     Vector ReLU();
+    double getComponent(int index);
 };
 
 

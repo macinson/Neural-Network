@@ -6,6 +6,7 @@
 
 #include <utility>
 #include <algorithm>
+#include <iostream>
 
 Vector::Vector(vector<double> components) : components{std::move(components)} {}
 
@@ -48,4 +49,12 @@ Vector Vector::ReLU() {
     res.reserve(components.size());
     for(double d : components) res.push_back(max(0.0,d));
     return Vector(res);
+}
+
+double Vector::getComponent(int index) {
+    try{
+        return components.at(index);
+    }catch (...){
+        cout << "Index out of bounds" << endl;
+    }
 }
