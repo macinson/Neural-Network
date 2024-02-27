@@ -15,6 +15,6 @@ int main() {
 //    cout << XOR.output(Vector({1,1})).getComponents().at(0) << endl;
 
     Matrix m({Vector({1,2,3}), Vector({2,1,3}),Vector({4,1,7})});
-    cout << m.toString();
+    cout << m.toString(0);
     return 0;
 }

@@ -3,6 +3,7 @@
 //
 
 #include "Matrix.h"
+#include "UsefulMethods.h"
 
 Matrix::Matrix(vector<Vector> columns) : columns{columns}, n{static_cast<int>(columns.size())} {
     m = (columns.empty()) ? 0 : columns.at(0).getComponents().size();
@@ -33,12 +34,12 @@ Vector Matrix::toVector() {
     return Vector(comp);
 }
 
-string Matrix::toString() {
+string Matrix::toString(int precision) {
     string result = "";
     if(m == 1){
         result += "( ";
         for(int i = 0; i < n; i++){
-            result += to_string(columns.at(i).getComponents().at(0)) + " ";
+            result += UsefulMethods::doubleToString(columns.at(i).getComponents().at(0),precision) + " ";
         }
         result += ")";
     }
@@ -48,7 +49,7 @@ string Matrix::toString() {
             else if(i ==m-1) result +="\\ ";
             else result +="| ";
             for(int j = 0; j < n; j++){
-                result += to_string(columns.at(j).getComponents().at(i)) + " ";
+                result += UsefulMethods::doubleToString(columns.at(j).getComponents().at(i),precision) + " ";
             }
             if(i == 0) result += "\\\n";
             else if(i ==m-1) result +="/\n";
