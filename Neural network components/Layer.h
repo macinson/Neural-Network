@@ -6,8 +6,14 @@
 #define CPP_LAYER_H
 
 
-class Layer {
+#include "../Common/Vector.h"
+#include "../Common/Matrix.h"
 
+class Layer {
+private:
+    Vector nodes;
+public:
+    Layer(Vector nodes);
 };
 
 
