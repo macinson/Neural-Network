@@ -12,8 +12,11 @@
 class Layer {
 private:
     Vector nodes;
+    Matrix inWeights;
+    Vector biases;
 public:
-    Layer(Vector nodes);
+    Layer(Vector nodes, Matrix inWeights, Vector biases);
+
 };
 
 
