@@ -16,4 +16,6 @@ add_executable(cpp main.cpp
         Common/UsefulMethods.h
         "Neural network components/Layer.cpp"
         "Neural network components/Layer.h"
+        Common/WrongDimensionsException.cpp
+        Common/WrongDimensionsException.h
 )

@@ -5,15 +5,11 @@
 #include "NeuralNetwork.h"
 #include "TrainingSet.h"
 
-NeuralNetwork::NeuralNetwork(vector<Vector> biases, vector<Matrix> weights) {
-    this->biases = std::move(biases);
-    this->weights = std::move(weights);
-    this->last = std::move(last);
-}
+NeuralNetwork::NeuralNetwork(vector<Layer> layers):layers(std::move(layers)) {}
 
 Vector NeuralNetwork::output(Vector input) {
-    for(int i = 0; i < weights.size(); i++){
-        input = (weights.at(i)*input + biases.at(i)).ReLU();
+    for(Layer l : layers){
+        input = l.output(input);
     }
     return input;
 }

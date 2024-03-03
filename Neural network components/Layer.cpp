@@ -4,4 +4,11 @@
 
 #include "Layer.h"
 
-Layer::Layer(Vector nodes, Matrix inWeights, Vector biases): nodes(std::move(nodes)), inWeights(std::move(inWeights)), biases(std::move(biases)) {}
+Layer::Layer(Matrix inWeights, Vector biases): inWeights(std::move(inWeights)), biases(std::move(biases)), nodes({}) {
+    this->nodes = Vector(vector<double>(biases.getSize(),0.0));
+}
+
+Vector Layer::output(Vector input) {
+    nodes = inWeights* input + biases;
+    return nodes.ReLU();
+}
