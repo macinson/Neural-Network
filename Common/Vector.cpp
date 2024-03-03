@@ -3,6 +3,7 @@
 //
 
 #include "Vector.h"
+#include "WrongDimensionsException.h"
 
 #include <utility>
 #include <algorithm>
@@ -11,11 +12,17 @@
 Vector::Vector(vector<double> components) : components{std::move(components)} {}
 
 double Vector::operator*(Vector other) {
-    double res = 0.0;
-    for (int i = 0; i < this->components.size(); i++) {
-        res += other.getComponents().at(i) * this->components.at(i);
+    try {
+        if (this->getSize() != other.getSize()) throw WrongDimensionsException();
+        double res = 0.0;
+        for (int i = 0; i < this->components.size(); i++) {
+            res += other.getComponents().at(i) * this->components.at(i);
+        }
+        return res;
     }
-    return res;
+    catch (WrongDimensionsException &e){
+        cout << e.message();
+    }
 }
 
 string Vector::toString() {
@@ -27,18 +34,24 @@ string Vector::toString() {
 }
 
 Vector Vector::operator+(Vector other) {
-    vector<double> res;
-    res.reserve(this->components.size());
-    for (int i = 0; i < this->components.size(); i++) {
-        res.push_back(other.getComponents().at(i) + this->components.at(i));
+    try {
+        if(this->getSize() != other.getSize()) throw WrongDimensionsException();
+        vector<double> res;
+        res.reserve(this->components.size());
+        for (int i = 0; i < this->components.size(); i++) {
+            res.push_back(other.getComponents().at(i) + this->components.at(i));
+        }
+        return Vector(res);
     }
-    return Vector(res);
+    catch (WrongDimensionsException &e){
+        cout << e.message();
+    }
 }
 
 Vector Vector::operator*(double scalar) {
     vector<double> res;
     res.reserve(this->components.size());
-    for (double component : this->components) {
+    for (double component: this->components) {
         res.push_back(component * scalar);
     }
     return Vector(res);
@@ -47,14 +60,14 @@ Vector Vector::operator*(double scalar) {
 Vector Vector::ReLU() {
     vector<double> res;
     res.reserve(components.size());
-    for(double d : components) res.push_back(max(0.0,d));
+    for (double d: components) res.push_back(max(0.0, d));
     return Vector(res);
 }
 
 double Vector::getComponent(int index) {
-    try{
+    try {
         return components.at(index);
-    }catch (...){
+    } catch (...) {
         cout << "Index out of bounds" << endl;
     }
 }
