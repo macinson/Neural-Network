@@ -8,17 +8,16 @@
 #include "../Common/Vector.h"
 #include "../Common/Matrix.h"
 #include "TrainingSet.h"
+#include "Layer.h"
 
 using namespace std;
 
 
 class NeuralNetwork {
 private:
-    vector<Vector> biases;
-    vector<Matrix> weights;
-    Vector last = Vector({});
+    vector<Layer> layers;
 public:
-    NeuralNetwork(vector<Vector> biases, vector<Matrix> weights);
+    explicit NeuralNetwork(vector<Layer> layers);
     Vector output(Vector input);
     void backProp(int iterations, TrainingSet trainingSet);
 };

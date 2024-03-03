@@ -21,6 +21,7 @@ public:
     string toString();
     Vector ReLU();
     double getComponent(int index);
+    int getSize(){return components.size();}
 };
 
 
