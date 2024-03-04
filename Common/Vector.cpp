@@ -72,3 +72,8 @@ double Vector::getComponent(int index) {
         cout << "Index out of bounds" << endl;
     }
 }
+
+double Vector::addEntry(double d) {
+    components.emplace_back(d);
+    return d;
+}

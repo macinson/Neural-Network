@@ -22,6 +22,7 @@ public:
     Vector ReLU();
     double getComponent(int index);
     int getSize(){return components.size();}
+    double addEntry(double d);
 };
 
 
