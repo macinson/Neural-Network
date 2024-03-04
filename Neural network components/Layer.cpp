@@ -12,3 +12,11 @@ Vector Layer::output(Vector input) {
     nodes = inWeights* input + biases;
     return nodes.ReLU();
 }
+
+void Layer::update(Vector derivatives) {
+    Matrix weightUpdates({});
+    Vector thisLayerDerivatives({});
+    for(int i = 0; i < this->nodes.getSize(); i++){
+        
+    }
+}

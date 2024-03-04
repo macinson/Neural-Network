@@ -69,7 +69,12 @@ string Matrix::toString(int precision) {
 
 void Matrix::appendRow(Vector row) {
     try{
-        if(n!= row.getSize()) throw WrongDimensionsException();
+        if(n!= 0 && n!= row.getSize()) throw WrongDimensionsException();
+        if(n==0){
+            for(int i =0; i < row.getSize(); i++){
+                columns.emplace_back(Vector({}));
+            }
+        }
         for(int i = 0; i < n; i ++){
             columns.at(i).addEntry(row.getComponent(i));
         }
