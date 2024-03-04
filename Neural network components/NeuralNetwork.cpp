@@ -14,6 +14,8 @@ Vector NeuralNetwork::output(Vector input) {
     return input;
 }
 
-void NeuralNetwork::backProp(int iterations, TrainingSet trainingSet) {
-
+void NeuralNetwork::backProp(TrainingSet trainingSet) {
+    for(const Vector& input : trainingSet.getInput()){
+        this->output(input);
+    }
 }

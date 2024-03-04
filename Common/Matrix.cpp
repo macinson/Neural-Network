@@ -66,3 +66,31 @@ string Matrix::toString(int precision) {
     }
     return result;
 }
+
+void Matrix::appendRow(Vector row) {
+    try{
+        if(n!= row.getSize()) throw WrongDimensionsException();
+        for(int i = 0; i < n; i ++){
+            columns.at(i).addEntry(row.getComponent(i));
+        }
+    } catch(WrongDimensionsException e){
+        cout << e.message();
+    }
+}
+
+Matrix Matrix::operator+(Matrix other) {
+    try{
+        if(n != other.getN()) throw WrongDimensionsException();
+        for(int i = 0; i < n; i++){
+            this->columns.at(i) = this->columns.at(i) + other.getColumn(i);
+        }
+    }catch (WrongDimensionsException e){
+        cout << e.message();
+    }
+}
+
+Matrix Matrix::operator*(double scalar) {
+    for(int i = 0; i < n; i++){
+        this->columns.at(i) = this->columns.at(i) * scalar;
+    }
+}

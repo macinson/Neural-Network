@@ -21,6 +21,11 @@ public:
     bool empty();
     Vector toVector();
     string toString(int precision);
+    void appendRow(Vector row);
+    Matrix operator+(Matrix other);
+    Matrix operator*(double scalar);
+    int getN(){return n;}
+    Vector getColumn(int i){return columns.at(i);}
 };
 
 

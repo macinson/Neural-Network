@@ -4,6 +4,7 @@
 
 #include "Vector.h"
 #include "WrongDimensionsException.h"
+#include "UsefulMethods.h"
 
 #include <utility>
 #include <algorithm>
@@ -25,10 +26,10 @@ double Vector::operator*(Vector other) {
     }
 }
 
-string Vector::toString() {
+string Vector::toString(int precision) {
     string res = "{";
     for (int i = 0; i < this->components.size(); i++) {
-        res += to_string(this->components.at(i)) + ((i < this->components.size() - 1) ? ", " : "}");
+        res += UsefulMethods::doubleToString(this->components.at(i),precision) + ((i < this->components.size() - 1) ? ", " : "}");
     }
     return res;
 }
@@ -70,4 +71,9 @@ double Vector::getComponent(int index) {
     } catch (...) {
         cout << "Index out of bounds" << endl;
     }
+}
+
+double Vector::addEntry(double d) {
+    components.emplace_back(d);
+    return d;
 }

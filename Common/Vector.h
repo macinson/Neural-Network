@@ -18,10 +18,11 @@ public:
     double operator * (Vector other);
     Vector operator + (Vector other);
     Vector operator * (double scalar);
-    string toString();
+    string toString(int precision);
     Vector ReLU();
     double getComponent(int index);
     int getSize(){return components.size();}
+    double addEntry(double d);
 };
 
 

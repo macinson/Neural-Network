@@ -19,3 +19,7 @@ string UsefulMethods::doubleToString(double d, int precision) {
     }
     return result;
 }
+
+double UsefulMethods::ReLUDerivative(double d) {
+    return (d <= 0.0) ? 0.0 : 1.0;
+}

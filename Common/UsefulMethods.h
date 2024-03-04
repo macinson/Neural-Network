@@ -13,6 +13,7 @@ using namespace std;
 class UsefulMethods {
 public:
     static string doubleToString(double d, int precision);
+    static double ReLUDerivative(double d);
 };
 
 
