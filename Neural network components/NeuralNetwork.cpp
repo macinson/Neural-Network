@@ -17,13 +17,16 @@ Vector NeuralNetwork::output(Vector input) {
 void NeuralNetwork::backProp(TrainingSet trainingSet, double learningRate) {
     for (int i = 0; i < trainingSet.getInput().size(); i++) {
         this->output(trainingSet.getInput().at(i));
-        Vector costDerivative({});
+        Vector derivatives({});
         for (int j = 0; j < trainingSet.getOutput().at(i).getSize(); i++) {
-            costDerivative.addEntry(
+            derivatives.addEntry(
                     2 * (trainingSet.getOutput().at(i).getComponent(j) - layers.back().getNodes().getComponent(j)));
         }
         for(int j = layers.size()-1; j >=0;j--){
-            layers.at(j);
+            Vector prev({});
+            if(j == 0) prev = trainingSet.getInput().at(i);
+            else prev = layers.at(j-1).getNodes();
+            derivatives = layers.at(j).update(derivatives, prev);
         }
     }
 }

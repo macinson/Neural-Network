@@ -25,7 +25,9 @@ public:
     Matrix operator+(Matrix other);
     Matrix operator*(double scalar);
     int getN(){return n;}
+    int getM(){return m;}
     Vector getColumn(int i){return columns.at(i);}
+    vector<Vector> getColumns(){return columns;}
 };
 
 
