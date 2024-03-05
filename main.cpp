@@ -41,7 +41,7 @@ int main() {
     layers.emplace_back(m2,b2);
     NeuralNetwork XOR(layers);
 
-    XOR.backProp(trainingSet,0.001);
+    XOR.backProp(trainingSet,0.0001);
 
     cout << round(XOR.output(Vector(vector<double>{0,0})).getComponent(0)) << endl;
     cout << round(XOR.output(Vector(vector<double>{1,0})).getComponent(0)) << endl;

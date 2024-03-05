@@ -37,6 +37,6 @@ Vector Layer::update(Vector derivatives, Vector prev, double learningRate) {
         next.addEntry(mean);
     }
     inWeights = inWeights + ((weightUpdates * (-1.0)) * learningRate);
-    biases = biases + thisLayerDerivatives * (-1.0);
+    biases = biases + thisLayerDerivatives * (-1.0) * learningRate;
     return next;
 }
