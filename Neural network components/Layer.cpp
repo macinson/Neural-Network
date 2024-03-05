@@ -25,7 +25,7 @@ Vector Layer::update(Vector derivatives, Vector prev, double learningRate) {
         for(int j = 0; j < inWeights.getM(); j++){
             column.addEntry(prev.getComponent(i) * thisLayerDerivatives.getComponent(j));
         }
-        weightUpdates.getColumns().emplace_back(column);
+        weightUpdates.addColumn(column);
     }
     Vector next({});
     for(int i = 0; i < inWeights.getN(); i++){
@@ -36,7 +36,7 @@ Vector Layer::update(Vector derivatives, Vector prev, double learningRate) {
         mean /= inWeights.getM() * 1.0;
         next.addEntry(mean);
     }
-    inWeights = inWeights + weightUpdates * (-1.0) * learningRate;
+    inWeights = inWeights + ((weightUpdates * (-1.0)) * learningRate);
     biases = biases + thisLayerDerivatives * (-1.0);
     return next;
 }

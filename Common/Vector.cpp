@@ -77,3 +77,7 @@ double Vector::addEntry(double d) {
     components.emplace_back(d);
     return d;
 }
+
+Vector::Vector(int n, double (*random)()) {
+    for(int i = 0; i < n; i++) components.emplace_back(random());
+}

@@ -28,6 +28,8 @@ public:
     int getM(){return m;}
     Vector getColumn(int i){return columns.at(i);}
     vector<Vector> getColumns(){return columns;}
+    Matrix(int m, int n, double (*random)());
+    void addColumn(Vector column);
 };
 
 

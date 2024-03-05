@@ -15,6 +15,7 @@ private:
     vector<double> components;
 public:
     explicit Vector(vector<double> components);
+    Vector(int n, double (*random)());
 
     vector<double> getComponents() { return components; }
 

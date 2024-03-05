@@ -8,7 +8,7 @@
 NeuralNetwork::NeuralNetwork(vector<Layer> layers) : layers(std::move(layers)) {}
 
 Vector NeuralNetwork::output(Vector input) {
-    for (Layer l: layers) {
+    for (Layer& l: layers) {
         input = l.output(input);
     }
     return input;
@@ -18,7 +18,7 @@ void NeuralNetwork::backProp(TrainingSet trainingSet, double learningRate) {
     for (int i = 0; i < trainingSet.getInput().size(); i++) {
         this->output(trainingSet.getInput().at(i));
         Vector derivatives({});
-        for (int j = 0; j < trainingSet.getOutput().at(i).getSize(); i++) {
+        for (int j = 0; j < trainingSet.getOutput().at(i).getSize(); j++) {
             derivatives.addEntry(
                     2 * (trainingSet.getOutput().at(i).getComponent(j) - layers.back().getNodes().getComponent(j)));
         }
