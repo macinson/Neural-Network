@@ -19,7 +19,7 @@ private:
 public:
     explicit NeuralNetwork(vector<Layer> layers);
     Vector output(Vector input);
-    void backProp(TrainingSet trainingSet);
+    void backProp(TrainingSet trainingSet, double learningRate);
 };
 
 
