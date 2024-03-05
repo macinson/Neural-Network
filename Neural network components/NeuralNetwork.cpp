@@ -26,7 +26,7 @@ void NeuralNetwork::backProp(TrainingSet trainingSet, double learningRate) {
             Vector prev({});
             if(j == 0) prev = trainingSet.getInput().at(i);
             else prev = layers.at(j-1).getNodes();
-            derivatives = layers.at(j).update(derivatives, prev);
+            derivatives = layers.at(j).update(derivatives, prev, learningRate);
         }
     }
 }

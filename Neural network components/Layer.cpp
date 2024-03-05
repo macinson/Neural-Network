@@ -14,7 +14,7 @@ Vector Layer::output(Vector input) {
     return nodes.ReLU();
 }
 
-Vector Layer::update(Vector derivatives, Vector prev) {
+Vector Layer::update(Vector derivatives, Vector prev, double learningRate) {
     Matrix weightUpdates({});
     Vector thisLayerDerivatives({});
     for(int i = 0; i < this->nodes.getSize(); i++){
@@ -27,5 +27,16 @@ Vector Layer::update(Vector derivatives, Vector prev) {
         }
         weightUpdates.getColumns().emplace_back(column);
     }
-    
+    Vector next({});
+    for(int i = 0; i < inWeights.getN(); i++){
+        double mean = 0.0;
+        for(int j = 0; j < inWeights.getM(); j++){
+            mean += inWeights.getColumn(i).getComponent(j) * thisLayerDerivatives.getComponent(j);
+        }
+        mean /= inWeights.getM() * 1.0;
+        next.addEntry(mean);
+    }
+    inWeights = inWeights + weightUpdates * (-1.0) * learningRate;
+    biases = biases + thisLayerDerivatives * (-1.0);
+    return next;
 }
