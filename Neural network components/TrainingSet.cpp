@@ -45,6 +45,9 @@ TrainingSet TrainingSet::csvNumber(string path) {
                 token = strtok(NULL,",");
                 i++;
             }
+            if(i!=785){
+                cout << "dupa" << endl;
+            }
             result.getInput()->emplace_back(currInput);
             result.getOutput()->emplace_back(currOutput);
         }

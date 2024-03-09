@@ -19,6 +19,8 @@ void NeuralNetwork::backProp(TrainingSet trainingSet, double learningRate) {
         this->output(trainingSet.getInput()->at(i));
         Vector derivatives({});
         for (int j = 0; j < trainingSet.getOutput()->at(i).getSize(); j++) {
+            double d = layers.back().getNodes().getComponent(j);
+            double c = trainingSet.getOutput()->at(i).getComponent(j);
             derivatives.addEntry(
                     2 * (trainingSet.getOutput()->at(i).getComponent(j) - layers.back().getNodes().getComponent(j)));
         }

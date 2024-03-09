@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <iostream>
 
-Vector::Vector(vector<double> components) : components{std::move(components)} {}
+Vector::Vector(vector<double> components) : components{std::move(components)}, size(components.size()) {}
 
 double Vector::operator*(Vector other) {
     try {
@@ -75,6 +75,7 @@ double Vector::getComponent(int index) {
 
 double Vector::addEntry(double d) {
     components.emplace_back(d);
+    size++;
     return d;
 }
 

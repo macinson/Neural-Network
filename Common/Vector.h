@@ -13,6 +13,7 @@ using namespace std;
 class Vector {
 private:
     vector<double> components;
+    int size;
 public:
     explicit Vector(vector<double> components);
     Vector(int n, double (*random)());
