@@ -13,34 +13,22 @@ double random(){
 }
 
 int main() {
-//    vector<Layer> layers;
-//    layers.emplace_back(Matrix({Vector({1, 1}), Vector({1,1})}), Vector({0,-1}));
-//    layers.emplace_back(Matrix({Vector({1}),Vector({-2})}),Vector({0}));
-//    NeuralNetwork XOR(layers);
-
-
     TrainingSet trainingSet = TrainingSet::csvNumber("../Resources/testSetNumbers.txt");
-
-    Matrix m1(2,2,&random);
-    Matrix m2(1,2,&random);
-    Vector b1(2, &random);
-    Vector b2(1,&random);
+    Matrix m1(16,784,&random);
+    Matrix m2(16,16,&random);
+    Matrix m3(10,16,&random);
+    Vector b1(16,&random);
+    Vector b2(16,&random);
+    Vector b3(10,&random);
     vector<Layer> layers;
     layers.emplace_back(m1,b1);
     layers.emplace_back(m2,b2);
-    NeuralNetwork XOR(layers);
+    layers.emplace_back(m3,b3);
+    NeuralNetwork numbers(layers);
 
-    XOR.backProp(trainingSet,0.001);
+    numbers.backProp(trainingSet,0.01);
 
-    cout << round(XOR.output(Vector(vector<double>{0,0})).getComponent(0)) << endl;
-    cout << round(XOR.output(Vector(vector<double>{1,0})).getComponent(0)) << endl;
-    cout << round(XOR.output(Vector(vector<double>{0,1})).getComponent(0)) << endl;
-    cout << round(XOR.output(Vector(vector<double>{1,1})).getComponent(0)) << endl;
-
-    Matrix m({Vector({1,2,3}), Vector({2,1,3}),Vector({4,1,7})});
-    cout << endl << m.toString(0);
-
-
+    
 
     return 0;
 }

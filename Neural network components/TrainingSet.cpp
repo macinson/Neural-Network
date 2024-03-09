@@ -35,7 +35,7 @@ TrainingSet TrainingSet::csvNumber(string path) {
             int i = 0;
             while(token != NULL){
                 if(i==0){
-                    for(int j = 0; j < 9;j++){
+                    for(int j = 0; j < 10;j++){
                         if(j==stoi(token)) currOutput.addEntry(1);
                         else currOutput.addEntry(0);
                     }
