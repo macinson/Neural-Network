@@ -14,8 +14,9 @@ private:
     vector<Vector> output;
 public:
     TrainingSet(vector<Vector> input, vector<Vector> output);
-    virtual vector<Vector> getInput();
-    virtual vector<Vector> getOutput();
+    static TrainingSet csvNumber(string path);
+    vector<Vector>* getInput();
+    vector<Vector>* getOutput();
 };
 
 

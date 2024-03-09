@@ -18,19 +18,8 @@ int main() {
 //    layers.emplace_back(Matrix({Vector({1}),Vector({-2})}),Vector({0}));
 //    NeuralNetwork XOR(layers);
 
-    vector<Vector> inputs;
-    inputs.emplace_back(vector<double>{0,0});
-    inputs.emplace_back(vector<double>{0,1});
-    inputs.emplace_back(vector<double>{1,0});
-    inputs.emplace_back(vector<double>{1,1});
 
-    vector<Vector> outputs;
-    outputs.emplace_back(vector<double>{0});
-    outputs.emplace_back(vector<double>{1});
-    outputs.emplace_back(vector<double>{1});
-    outputs.emplace_back(vector<double>{0});
-
-    TrainingSet trainingSet(inputs,outputs);
+    TrainingSet trainingSet = TrainingSet::csvNumber("../Resources/testSetNumbers.txt");
 
     Matrix m1(2,2,&random);
     Matrix m2(1,2,&random);
@@ -41,7 +30,7 @@ int main() {
     layers.emplace_back(m2,b2);
     NeuralNetwork XOR(layers);
 
-    XOR.backProp(trainingSet,0.0001);
+    XOR.backProp(trainingSet,0.001);
 
     cout << round(XOR.output(Vector(vector<double>{0,0})).getComponent(0)) << endl;
     cout << round(XOR.output(Vector(vector<double>{1,0})).getComponent(0)) << endl;
