@@ -6,6 +6,7 @@
 #define CPP_USEFULMETHODS_H
 
 #include <string>
+#include <cmath>
 
 using namespace std;
 
@@ -14,6 +15,8 @@ class UsefulMethods {
 public:
     static string doubleToString(double d, int precision);
     static double ReLUDerivative(double d);
+
+    static double sigmoidDerivative(double d);
 };
 
 

@@ -23,3 +23,8 @@ string UsefulMethods::doubleToString(double d, int precision) {
 double UsefulMethods::ReLUDerivative(double d) {
     return (d <= 0.0) ? 0.0 : 1.0;
 }
+
+double UsefulMethods::sigmoidDerivative(double d) {
+    return exp(-d)/ pow((1+ exp(-d)),2.0);
+}
+

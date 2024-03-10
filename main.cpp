@@ -27,7 +27,7 @@ int main() {
     layers.emplace_back(m3, b3);
     NeuralNetwork numbers(layers);
 
-    numbers.backProp(trainingSet, 0.001);
+    numbers.backProp(trainingSet, 0.00001);
 
     Vector output = numbers.output(Vector::commaSeperatedToVector(
             "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"

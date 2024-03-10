@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <iostream>
 #include <cstring>
+#include <cmath>
 
 Vector::Vector(vector<double> components) : components{std::move(components)}, size(components.size()) {}
 
@@ -63,6 +64,13 @@ Vector Vector::ReLU() {
     vector<double> res;
     res.reserve(components.size());
     for (double d: components) res.push_back(max(0.0, d));
+    return Vector(res);
+}
+
+Vector Vector::sigmoid() {
+    vector<double> res;
+    res.reserve(components.size());
+    for (double d: components) res.push_back(1.0/(1.0+exp(-d)));
     return Vector(res);
 }
 

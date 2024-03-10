@@ -36,6 +36,8 @@ public:
     int getSize() { return components.size(); }
 
     double addEntry(double d);
+
+    Vector sigmoid();
 };
 
 
