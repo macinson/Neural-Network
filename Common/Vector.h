@@ -17,6 +17,7 @@ private:
 public:
     explicit Vector(vector<double> components);
     Vector(int n, double (*random)());
+    static Vector commaSeperatedToVector(string s);
 
     vector<double> getComponents() { return components; }
 

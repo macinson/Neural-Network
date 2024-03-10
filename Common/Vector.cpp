@@ -9,6 +9,7 @@
 #include <utility>
 #include <algorithm>
 #include <iostream>
+#include <cstring>
 
 Vector::Vector(vector<double> components) : components{std::move(components)}, size(components.size()) {}
 
@@ -81,4 +82,16 @@ double Vector::addEntry(double d) {
 
 Vector::Vector(int n, double (*random)()) {
     for(int i = 0; i < n; i++) components.emplace_back(random());
+}
+
+Vector Vector::commaSeperatedToVector(string s) {
+    Vector result({});
+    char* arr = new char[s.length()+1];
+    strcpy(arr,s.c_str());
+    char* token = strtok(arr,",");
+    while(token != NULL){
+        result.addEntry(stoi(token));
+        token = strtok(NULL,",");
+    }
+    return result;
 }
