@@ -28,3 +28,11 @@ double UsefulMethods::sigmoidDerivative(double d) {
     return exp(-d)/ pow((1+ exp(-d)),2.0);
 }
 
+double UsefulMethods::ReLU(double d){
+    return max(0.0,d);
+}
+
+double UsefulMethods::sigmoid(double d){
+    return 1.0/(1.0+exp(-d));
+}
+

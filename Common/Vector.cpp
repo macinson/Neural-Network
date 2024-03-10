@@ -12,7 +12,9 @@
 #include <cstring>
 #include <cmath>
 
-Vector::Vector(vector<double> components) : components{std::move(components)}, size(components.size()) {}
+Vector::Vector(vector<double> components) : components{std::move(components)} {
+    this->size = components.size();
+}
 
 double Vector::operator*(Vector other) {
     try {
@@ -60,19 +62,13 @@ Vector Vector::operator*(double scalar) {
     return Vector(res);
 }
 
-Vector Vector::ReLU() {
+Vector Vector::activation(double (*func)(double)) {
     vector<double> res;
     res.reserve(components.size());
-    for (double d: components) res.push_back(max(0.0, d));
+    for (double d: components) res.push_back(func(d));
     return Vector(res);
 }
 
-Vector Vector::sigmoid() {
-    vector<double> res;
-    res.reserve(components.size());
-    for (double d: components) res.push_back(1.0/(1.0+exp(-d)));
-    return Vector(res);
-}
 
 double Vector::getComponent(int index) {
     try {
@@ -90,6 +86,7 @@ double Vector::addEntry(double d) {
 
 Vector::Vector(int n, double (*random)()) {
     for(int i = 0; i < n; i++) components.emplace_back(random());
+    size = n;
 }
 
 Vector Vector::commaSeperatedToVector(string s) {

@@ -16,9 +16,9 @@ private:
     Vector nodes;
 public:
     Layer(Matrix inWeights, Vector biases);
-    Vector output(Vector input);
+    Vector output(Vector input, double(*func)(double));
     Vector getNodes(){return nodes;}
-    Vector update(Vector derivatives, Vector prev, double learningRate);
+    Vector update(Vector derivatives, Vector prev, double learningRate, double (*derivative)(double));
 };
 
 

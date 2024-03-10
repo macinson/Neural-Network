@@ -15,9 +15,11 @@ using namespace std;
 
 class NeuralNetwork {
 private:
+    double(*activation)(double);
+    double(*derivative)(double);
     vector<Layer> layers;
 public:
-    explicit NeuralNetwork(vector<Layer> layers);
+    NeuralNetwork(vector<Layer> layers, double (*activation)(double), double (*derivative)(double));
     Vector output(Vector input);
     void backProp(TrainingSet trainingSet, double learningRate);
 };

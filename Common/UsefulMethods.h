@@ -17,6 +17,10 @@ public:
     static double ReLUDerivative(double d);
 
     static double sigmoidDerivative(double d);
+
+    static double ReLU(double d);
+
+    static double sigmoid(double d);
 };
 
 

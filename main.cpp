@@ -25,11 +25,11 @@ int main() {
     layers.emplace_back(m1, b1);
     layers.emplace_back(m2, b2);
     layers.emplace_back(m3, b3);
-    NeuralNetwork numbers(layers);
+    NeuralNetwork numbers(layers, UsefulMethods::sigmoid, UsefulMethods::sigmoidDerivative);
 
-    numbers.backProp(trainingSet, 0.00001);
+    numbers.backProp(trainingSet, 0.1);
 
-    Vector output = numbers.output(Vector::commaSeperatedToVector(
+    Vector input = Vector::commaSeperatedToVector(
             "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
             "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
             "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"
@@ -49,7 +49,9 @@ int main() {
             "0,0,0,0,0,0,0,0,0,142,252,252,252,252,252,252,229,128,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,76,152"
             ",252,252,199,124,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"
             ",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
-            "0,0,0,0,0,0,0")) * (1.0/255);
+            "0,0,0,0,0,0,0") * (1.0/255);
+
+    Vector output = numbers.output(input);
 
     for(int i = 0; i < 10; i++){
         cout << i << ": " << UsefulMethods::doubleToString(output.getComponent(i),2) << endl;

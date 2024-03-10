@@ -9,16 +9,16 @@ Layer::Layer(Matrix inWeights, Vector biases): inWeights(std::move(inWeights)), 
     this->nodes = Vector(vector<double>(biases.getSize(),0.0));
 }
 
-Vector Layer::output(Vector input) {
+Vector Layer::output(Vector input, double(*func)(double)) {
     nodes = inWeights* input + biases;
-    return nodes.sigmoid();
+    return nodes.activation(func);
 }
 
-Vector Layer::update(Vector derivatives, Vector prev, double learningRate) {
+Vector Layer::update(Vector derivatives, Vector prev, double learningRate, double (*derivative)(double)) {
     Matrix weightUpdates({});
     Vector thisLayerDerivatives({});
     for(int i = 0; i < this->nodes.getSize(); i++){
-        thisLayerDerivatives.addEntry(UsefulMethods::sigmoidDerivative(nodes.getComponent(i)) *derivatives.getComponent(i));
+        thisLayerDerivatives.addEntry(derivative(nodes.getComponent(i)) *derivatives.getComponent(i));
     }
     for(int i = 0; i < inWeights.getN(); i++){
         Vector column({});

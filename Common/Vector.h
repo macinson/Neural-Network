@@ -29,15 +29,13 @@ public:
 
     string toString(int precision);
 
-    Vector ReLU();
-
     double getComponent(int index);
 
     int getSize() { return components.size(); }
 
     double addEntry(double d);
 
-    Vector sigmoid();
+    Vector activation(double (*func)(double));
 };
 
 
