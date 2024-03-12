@@ -3,6 +3,8 @@
 //
 
 #include "Layer.h"
+
+#include <utility>
 #include "../Common/UsefulMethods.h"
 
 Layer::Layer(Matrix inWeights, Vector biases): inWeights(std::move(inWeights)), biases(std::move(biases)), nodes({}) {
@@ -10,7 +12,7 @@ Layer::Layer(Matrix inWeights, Vector biases): inWeights(std::move(inWeights)), 
 }
 
 Vector Layer::output(Vector input, double(*func)(double)) {
-    nodes = inWeights* input + biases;
+    nodes = inWeights* std::move(input) + biases;
     return nodes.activation(func);
 }
 

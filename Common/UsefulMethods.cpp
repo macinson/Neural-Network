@@ -25,7 +25,7 @@ double UsefulMethods::ReLUDerivative(double d) {
 }
 
 double UsefulMethods::sigmoidDerivative(double d) {
-    return exp(-d)/ pow((1+ exp(-d)),2.0);
+    return exp(-d)/ pow((1.0+ exp(-d)),2.0);
 }
 
 double UsefulMethods::ReLU(double d){
