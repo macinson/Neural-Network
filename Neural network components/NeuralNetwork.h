@@ -9,19 +9,20 @@
 #include "../Common/Matrix.h"
 #include "TrainingSet.h"
 #include "Layer.h"
+#include "../ActivationFunc/Activation.h"
+#include "../CostFunc/Cost.h"
 
 using namespace std;
 
-
 class NeuralNetwork {
 private:
-    double(*activation)(double);
-    double(*derivative)(double);
-    vector<Layer> layers;
+    vector<pair<Layer,Activation*>> layers;
 public:
-    NeuralNetwork(vector<Layer> layers, double (*activation)(double), double (*derivative)(double));
+    NeuralNetwork(vector<Layer> layers,vector<Activation*> activations);
     Vector output(Vector input);
-    void backProp(TrainingSet trainingSet, double learningRate);
+    void backward(Vector);
+    void optimiserStep(double);
+    pair<vector<double>,vector<double>> train(TrainingSet&, double,Cost*, int);
 };
 
 

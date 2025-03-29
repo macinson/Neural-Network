@@ -14,11 +14,22 @@ private:
     Matrix inWeights;
     Vector biases;
     Vector nodes;
+    Matrix weightGrad;
+    Vector biasGrad;
+    double (*wieghtInit)();
+    double (*biasInit)();
+
 public:
-    Layer(Matrix inWeights, Vector biases);
-    Vector output(Vector input, double(*func)(double));
-    Vector getNodes(){return nodes;}
-    Vector update(Vector derivatives, Vector prev, double learningRate, double (*derivative)(double));
+    Layer(int, int, double (*weightInit)(), double (*biasInit)());
+
+    Vector forward(Vector input);
+
+    Vector getNodes() { return nodes; }
+
+    Vector backward(const Vector&);
+
+    void update(double alpha);
+
 };
 
 

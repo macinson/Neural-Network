@@ -15,8 +15,12 @@ private:
 public:
     TrainingSet(vector<Vector> input, vector<Vector> output);
     static TrainingSet csvNumber(string path);
+    static TrainingSet mnist();
     vector<Vector>* getInput();
     vector<Vector>* getOutput();
+    void shuffle(int outputVectorSize);
+    [[nodiscard]] int size() const;
+    TrainingSet firstN(int n);
 };
 
 

@@ -18,4 +18,17 @@ add_executable(cpp main.cpp
         "Neural network components/Layer.h"
         Common/WrongDimensionsException.cpp
         Common/WrongDimensionsException.h
+        Common/Initialization.cpp
+        Common/Initialization.h
+        ActivationFunc/Activation.cpp
+        ActivationFunc/Activation.h
+        ActivationFunc/Sigmoid.cpp
+        ActivationFunc/Sigmoid.h
+        CostFunc/Cost.h
+        CostFunc/MSE.cpp
+        CostFunc/MSE.h
+        ActivationFunc/SoftMax.cpp
+        ActivationFunc/SoftMax.h
+        ActivationFunc/ReLu.cpp
+        ActivationFunc/ReLu.h
 )

@@ -16,18 +16,22 @@ Vector::Vector(vector<double> components) : components{std::move(components)} {
     this->size = components.size();
 }
 
-double Vector::operator*(Vector other) {
-    try {
-        if (this->getSize() != other.getSize()) throw WrongDimensionsException();
-        double res = 0.0;
-        for (int i = 0; i < this->components.size(); i++) {
-            res += other.getComponents().at(i) * this->components.at(i);
-        }
-        return res;
+double Vector::dot(Vector other) {
+    if (this->getSize() != other.getSize()) throw WrongDimensionsException();
+    double res = 0.0;
+    for (int i = 0; i < this->components.size(); i++) {
+        res += other.getComponents().at(i) * this->components.at(i);
     }
-    catch (WrongDimensionsException &e){
-        cout << e.message();
+    return res;
+}
+
+Vector Vector::operator*(Vector other) {
+    if (this->getSize() != other.getSize()) throw WrongDimensionsException();
+    vector<double> res{};
+    for (int i = 0; i < this->components.size(); i++) {
+        res.push_back(other.getComponents().at(i) * this->components.at(i));
     }
+    return Vector(res);
 }
 
 string Vector::toString(int precision) {
@@ -39,18 +43,31 @@ string Vector::toString(int precision) {
 }
 
 Vector Vector::operator+(Vector other) {
-    try {
-        if(this->getSize() != other.getSize()) throw WrongDimensionsException();
-        vector<double> res;
-        res.reserve(this->components.size());
-        for (int i = 0; i < this->components.size(); i++) {
-            res.push_back(other.getComponents().at(i) + this->components.at(i));
-        }
-        return Vector(res);
+    if(this->getSize() != other.getSize()) throw WrongDimensionsException();
+    vector<double> res;
+    res.reserve(this->components.size());
+    for (int i = 0; i < this->components.size(); i++) {
+        res.push_back(other.getComponents().at(i) + this->components.at(i));
     }
-    catch (WrongDimensionsException &e){
-        cout << e.message();
+    return Vector(res);
+}
+
+Vector Vector::operator-(Vector other) {
+    return *this + (other * (-1));
+}
+
+Vector Vector::append(Vector other) {
+    vector<double> res ={};
+    res.reserve(this->components.size() + other.getComponents().size());
+
+    for(int i = 0; i < this->components.size(); i++) {
+        res.emplace_back(this->components.at(i));
     }
+    for(int i = 0; i < other.getComponents().size(); i++) {
+        res.emplace_back(other.getComponents().at(i));
+    }
+
+    return Vector(res);
 }
 
 Vector Vector::operator*(double scalar) {
@@ -62,6 +79,16 @@ Vector Vector::operator*(double scalar) {
     return Vector(res);
 }
 
+Vector Vector::operator/(double scalar) {
+    vector<double> res;
+    res.reserve(this->components.size());
+    for (double component: this->components) {
+        res.push_back(1.0 * component / scalar);
+    }
+    return Vector(res);
+}
+
+
 Vector Vector::activation(double (*func)(double)) {
     vector<double> res;
     res.reserve(components.size());
@@ -71,11 +98,7 @@ Vector Vector::activation(double (*func)(double)) {
 
 
 double Vector::getComponent(int index) {
-    try {
-        return components.at(index);
-    } catch (...) {
-        cout << "Index out of bounds" << endl;
-    }
+    return components.at(index);
 }
 
 double Vector::addEntry(double d) {
@@ -100,3 +123,37 @@ Vector Vector::commaSeperatedToVector(string s) {
     }
     return result;
 }
+
+Vector Vector::subVector(int begin, int end) {
+    begin = max(begin,0);
+    end = min(static_cast<int>(this->components.size()),end);
+
+    Vector output({});
+
+    for(int i = begin; i<end; i++) {
+        output.addEntry(this->components.at(i));
+    }
+
+    return output;
+}
+
+double Vector::sum() {
+    double s = 0.0;
+    for(double d : components) {
+        s += d;
+    }
+    return s;
+}
+
+Vector Vector::apply(function<double(double)> f) {
+    vector<double> res{};
+    res.reserve(components.size());
+    for(const double d : components) {
+        res.push_back(f(d));
+    }
+    return Vector(res);
+}
+
+
+
+

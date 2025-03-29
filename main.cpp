@@ -1,41 +1,69 @@
 #include <iostream>
 #include <cmath>
+#include <memory>
+
 #include "Common/Vector.h"
 #include "Common/Matrix.h"
 #include "Neural network components/NeuralNetwork.h"
 #include <utility>
 #include <vector>
+#include <string>
+
+#include "ActivationFunc/ReLu.h"
+#include "ActivationFunc/Sigmoid.h"
+#include "ActivationFunc/SoftMax.h"
+#include "Common/Initialization.h"
 #include "Common/UsefulMethods.h"
+#include "CostFunc/MSE.h"
 
 using namespace std;
 
 double random() {
-    return ((double) rand() / RAND_MAX);
+    return (2.0* ((double) rand() / RAND_MAX)) -1.0;
 }
 
 int main() {
-    TrainingSet trainingSet = TrainingSet::csvNumber("../Resources/testSetNumbers.txt");
-    Matrix m1(16, 784, &random);
-    Matrix m2(16, 16, &random);
-    Matrix m3(10, 16, &random);
-    Vector b1(16, &random);
-    Vector b2(16, &random);
-    Vector b3(10, &random);
-    vector<Layer> layers;
-    layers.emplace_back(m1, b1);
-    layers.emplace_back(m2, b2);
-    layers.emplace_back(m3, b3);
-    NeuralNetwork numbers(layers, UsefulMethods::sigmoid, UsefulMethods::sigmoidDerivative);
+    TrainingSet trainingSet = TrainingSet::mnist();
+    trainingSet.shuffle(10);
 
-    numbers.backProp(trainingSet, 0.1);
+    TrainingSet test = trainingSet.firstN(3000);
 
-    Vector input = Vector::commaSeperatedToVector("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,36,103,225,255,254,203,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,94,196,240,253,253,253,253,253,131,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,206,253,253,253,249,142,105,75,253,228,26,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,143,253,253,253,190,108,0,0,144,253,253,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,118,253,253,151,5,0,0,84,247,253,213,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,34,141,140,2,0,0,55,246,253,250,67,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,83,233,253,253,103,0,0,0,0,0,0,0,0,0,0,0,0,61,139,166,166,160,22,0,0,0,0,84,248,253,253,184,13,0,0,0,0,0,0,0,0,0,0,0,166,252,253,253,253,253,227,82,0,0,82,244,253,252,189,14,0,0,0,0,0,0,0,0,0,0,0,29,232,253,253,216,140,192,253,251,93,93,252,253,247,98,0,0,0,0,0,0,0,0,0,0,0,0,0,88,253,253,221,33,0,4,143,253,253,253,253,253,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,150,253,253,170,0,0,3,136,253,253,253,253,222,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,150,253,253,134,0,26,183,253,253,253,253,222,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,96,253,253,166,145,243,253,253,253,234,247,251,58,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,33,236,253,253,253,253,253,234,131,28,98,252,94,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,138,253,253,251,233,135,19,0,0,0,249,208,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,136,186,82,0,0,0,0,0,0,222,253,85,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,145,253,208,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,80,253,222,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,160,222,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0") * (1.0/255);
+    default_random_engine generator;
+    uniform_real_distribution<double> distribution1(-sqrt(6.0/(784 + 16)), -sqrt(6.0/(784 + 16)));
+    uniform_real_distribution<double> distribution2(-sqrt(6.0/(16 + 16)), -sqrt(6.0/(16 + 16)));
+    uniform_real_distribution<double> distribution3(-sqrt(6.0/(10 + 16)), -sqrt(6.0/(10 + 16)));
 
-    Vector output = numbers.output(input);
+    // Initialization firstInit(784,16);
+    // Initialization secondInit(16,16);
+    // Initialization thirdInit(16,10);
 
-    for(int i = 0; i < 10; i++){
-        cout << i << ": " << UsefulMethods::doubleToString(output.getComponent(i),2) << endl;
+    Layer l1(784,16, &random, []() {return 0.0;});
+    Layer l2(16,16, &random, []() {return 0.0;});
+    Layer l3(16,10, &random, []() {return 0.0;});
+
+    Activation* a1 = new ReLu(0.01);
+    Activation* a2 = new ReLu(0.01);
+    Activation* a3 = new SoftMax();
+
+    Cost* mse = new MSE();
+
+
+    NeuralNetwork network ({l1,l2,l3},{a1,a2,a3});
+
+    auto res = network.train(test,0.1,mse,10);
+
+    cout << network.output(trainingSet.getInput()->at(0)).toString(2) << endl;
+    cout << trainingSet.getOutput()->at(0).toString(2) << endl;
+
+    for(int i = 0; i< res.first.size(); i++) {
+        cout << UsefulMethods::doubleToString(res.first.at(i),2) << ", " << UsefulMethods::doubleToString(res.second.at(i),2) << endl;
     }
+
+    delete a1;
+    delete a2;
+    delete a3;
+
+    delete mse;
 
     return 0;
 }

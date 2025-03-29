@@ -5,9 +5,9 @@
 #ifndef CPP_MATRIX_H
 #define CPP_MATRIX_H
 
-
-#include "Vector.h"
 #include <vector>
+#include "Vector.h"
+
 using namespace std;
 
 class Matrix {
@@ -23,6 +23,8 @@ public:
     string toString(int precision);
     void appendRow(Vector row);
     Matrix operator+(Matrix other);
+    Matrix operator-(Matrix other);
+    Matrix operator*(Matrix other);
     Matrix operator*(double scalar);
     int getN(){return n;}
     int getM(){return m;}
@@ -30,6 +32,8 @@ public:
     vector<Vector> getColumns(){return columns;}
     Matrix(int m, int n, double (*random)());
     void addColumn(Vector column);
+    Matrix transpose();
+    [[nodiscard]] static Matrix diagonalize(Vector);
 };
 
 

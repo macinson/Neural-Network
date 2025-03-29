@@ -12,6 +12,7 @@
 using namespace std;
 
 class Cost {
+public:
     virtual pair<double,Vector> calc(Vector, Vector) = 0;
 };
 

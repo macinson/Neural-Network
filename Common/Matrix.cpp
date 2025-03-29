@@ -12,21 +12,26 @@ Matrix::Matrix(vector<Vector> columns) : columns{columns}, n{static_cast<int>(co
 }
 
 Vector Matrix::operator*(Vector v) {
-    try {
-        if(v.getSize()!=n) throw WrongDimensionsException();
-        vector<double> temp;
-        temp.reserve(m);
-        for (int i = 0; i < m; i++) temp.push_back(0.0);
-        Vector res(temp);
-        for (int i = 0; i < n; i++) {
-            res = res + columns.at(i) * v.getComponent(i);
-        }
-        return res;
+    if(v.getSize()!=n) throw WrongDimensionsException();
+    vector<double> temp;
+    temp.reserve(m);
+    for (int i = 0; i < m; i++) temp.push_back(0.0);
+    Vector res(temp);
+    for (int i = 0; i < n; i++) {
+        res = res + columns.at(i) * v.getComponent(i);
     }
-    catch (WrongDimensionsException &e){
-        cout << e.message();
-    }
+    return res;
 }
+
+Matrix Matrix::operator*(Matrix other) {
+    if(n != other.getM()) throw WrongDimensionsException();
+    Matrix res({});
+    for(const Vector& c : other.getColumns()) {
+        res.addColumn((*this) * c);
+    }
+    return res;
+}
+
 
 bool Matrix::empty() {
     return columns.empty();
@@ -86,16 +91,21 @@ void Matrix::appendRow(Vector row) {
 }
 
 Matrix Matrix::operator+(Matrix other) {
-    try{
-        if(n != other.getN()) throw WrongDimensionsException();
-        vector<Vector> columns;
-        for(int i = 0; i < n; i++){
-            columns.emplace_back(this->columns.at(i) + other.getColumn(i));
-        }
-        return Matrix(columns);
-    }catch (WrongDimensionsException e){
-        cout << e.message();
+    if(n != other.getN()) throw WrongDimensionsException();
+    vector<Vector> columns;
+    for(int i = 0; i < n; i++){
+        columns.emplace_back(this->columns.at(i) + other.getColumn(i));
     }
+    return Matrix(columns);
+}
+
+Matrix Matrix::operator-(Matrix other) {
+    if(n != other.getN()) throw WrongDimensionsException();
+    vector<Vector> columns;
+    for(int i = 0; i < n; i++){
+        columns.emplace_back(this->columns.at(i) - other.getColumn(i));
+    }
+    return Matrix(columns);
 }
 
 Matrix Matrix::operator*(double scalar) {
@@ -127,4 +137,31 @@ void Matrix::addColumn(Vector column) {
     }catch (WrongDimensionsException e){
         cout << e.message() << endl;
     }
+}
+
+Matrix Matrix::transpose() {
+    Matrix res({});
+    for(int i = 0; i < m; i++) {
+        Vector v({});
+        for(int j = 0; j < n; j++) {
+            v.addEntry(columns.at(j).getComponent(i));
+        }
+        res.addColumn(v);
+    }
+    return res;
+}
+
+
+Matrix Matrix::diagonalize(Vector v){
+    const int n = v.getComponents().size();
+    Matrix res({});
+    for(int i = 0; i < n; i++) {
+        Vector curr({});
+        for(int j = 0; j < n;j++) {
+            if(i ==j) curr.addEntry(v.getComponent(i));
+            else curr.addEntry(0.0);
+        }
+        res.addColumn(curr);
+    }
+    return res;
 }

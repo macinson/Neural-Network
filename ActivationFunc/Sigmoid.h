@@ -9,6 +9,7 @@
 
 class Sigmoid : public Activation{
 public:
+    Sigmoid();
     Vector forward(Vector) override;
     Vector backward(Vector) override;
 };

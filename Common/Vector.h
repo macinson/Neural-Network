@@ -5,6 +5,7 @@
 #ifndef CPP_VECTOR_H
 #define CPP_VECTOR_H
 
+#include <functional>
 #include <vector>
 #include <string>
 
@@ -21,11 +22,17 @@ public:
 
     vector<double> getComponents() { return components; }
 
-    double operator*(Vector other);
+    double dot(Vector other);
+
+    Vector operator-(Vector other);
 
     Vector operator+(Vector other);
 
     Vector operator*(double scalar);
+
+    Vector operator/(double scalar);
+
+    Vector operator*(Vector other);
 
     string toString(int precision);
 
@@ -36,6 +43,14 @@ public:
     double addEntry(double d);
 
     Vector activation(double (*func)(double));
+
+    Vector subVector(int begin, int end);
+
+    Vector append(Vector other);
+
+    double sum();
+
+    Vector apply(function<double(double)>);
 };
 
 

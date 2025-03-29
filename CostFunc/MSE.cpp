@@ -11,5 +11,5 @@ pair<double, Vector> MSE::calc(Vector y_true, Vector y_pred) {
     for(double d : (y_true - y_pred).getComponents()) {
         loss += pow(d,2);
     }
-    return {0,(y_pred - y_true) * 2};
+    return {loss,(y_pred - y_true) * 2};
 }

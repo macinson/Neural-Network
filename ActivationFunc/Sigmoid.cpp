@@ -6,14 +6,13 @@
 
 #include <cmath>
 
+Sigmoid::Sigmoid() : Activation() {
+}
+
+
 Vector Sigmoid::backward(Vector x) {
     if(x.getSize() == 0) return Vector({});
-    vector<double> res {};
-    for(double d : x.getComponents()) {
-        double s = exp(-d)/ pow((1.0+ exp(-d)),2.0);
-        res.push_back(s);
-    }
-    return Vector(res);
+    return x * (Vector(cache->getSize(), [](){return 1.0;}) - (*cache)) * (*cache);
 }
 
 Vector Sigmoid::forward(Vector x) {
@@ -23,7 +22,7 @@ Vector Sigmoid::forward(Vector x) {
         double s = 1.0/(1.0+exp(-d));
         res.push_back(s);
     }
-    cache = new Vector({});
-    return Vector(res);
+    cache = new Vector(res);
+    return *cache;
 }
 
