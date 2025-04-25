@@ -19,6 +19,7 @@ Vector::Vector(vector<double> components) : components{std::move(components)} {
 double Vector::dot(Vector other) {
     if (this->getSize() != other.getSize()) throw WrongDimensionsException();
     double res = 0.0;
+#pragma omp parrallel for
     for (int i = 0; i < this->components.size(); i++) {
         res += other.getComponents().at(i) * this->components.at(i);
     }
@@ -27,9 +28,20 @@ double Vector::dot(Vector other) {
 
 Vector Vector::operator*(Vector other) {
     if (this->getSize() != other.getSize()) throw WrongDimensionsException();
-    vector<double> res{};
+    vector<double> res(this->components.size(), 0);
+#pragma omp parallel for
     for (int i = 0; i < this->components.size(); i++) {
-        res.push_back(other.getComponents().at(i) * this->components.at(i));
+        res[i] = (other.getComponents().at(i) * this->components.at(i));
+    }
+    return Vector(res);
+}
+
+Vector Vector::operator/(Vector other) {
+    if (this->getSize() != other.getSize()) throw WrongDimensionsException();
+    vector<double> res(this->components.size(), 0);
+#pragma omp parallel for
+    for (int i = 0; i < this->components.size(); i++) {
+        res[i] = (1.0 * other.getComponents().at(i) / this->components.at(i));
     }
     return Vector(res);
 }
@@ -44,10 +56,10 @@ string Vector::toString(int precision) {
 
 Vector Vector::operator+(Vector other) {
     if(this->getSize() != other.getSize()) throw WrongDimensionsException();
-    vector<double> res;
-    res.reserve(this->components.size());
+    vector<double> res(this->components.size(), 0);
+#pragma omp parallel for
     for (int i = 0; i < this->components.size(); i++) {
-        res.push_back(other.getComponents().at(i) + this->components.at(i));
+        res[i] = (other.getComponents().at(i) + this->components.at(i));
     }
     return Vector(res);
 }
@@ -71,28 +83,20 @@ Vector Vector::append(Vector other) {
 }
 
 Vector Vector::operator*(double scalar) {
-    vector<double> res;
-    res.reserve(this->components.size());
-    for (double component: this->components) {
-        res.push_back(component * scalar);
+    vector<double> res(this->components.size(),0);
+#pragma omp parallel for
+    for (int i = 0; i < this->components.size(); i++){
+        res[i] = (this->components.at(i) * scalar);
     }
     return Vector(res);
 }
 
 Vector Vector::operator/(double scalar) {
-    vector<double> res;
-    res.reserve(this->components.size());
-    for (double component: this->components) {
-        res.push_back(1.0 * component / scalar);
+    vector<double> res(this->components.size(),0);
+#pragma omp parallel for
+    for (int i = 0; i < this->components.size(); i++){
+        res[i] = (this->components.at(i) / scalar);
     }
-    return Vector(res);
-}
-
-
-Vector Vector::activation(double (*func)(double)) {
-    vector<double> res;
-    res.reserve(components.size());
-    for (double d: components) res.push_back(func(d));
     return Vector(res);
 }
 
@@ -107,8 +111,8 @@ double Vector::addEntry(double d) {
     return d;
 }
 
-Vector::Vector(int n, double (*random)()) {
-    for(int i = 0; i < n; i++) components.emplace_back(random());
+Vector::Vector(int n, const function<double()>& init) {
+    for(int i = 0; i < n; i++) components.emplace_back(init());
     size = n;
 }
 
@@ -153,6 +157,13 @@ Vector Vector::apply(function<double(double)> f) {
     }
     return Vector(res);
 }
+
+Vector Vector::clip(double min_clip, double max_clip) {
+    Vector bottomCLip = apply([=](double x){return (x > min_clip) ? x : min_clip;});
+    Vector upperCLip = bottomCLip.apply([=](double x){return (x < max_clip) ? x : max_clip;});
+    return upperCLip;
+}
+
 
 
 

@@ -9,7 +9,7 @@
 
 
 class MSE : public Cost{
-    pair<double, Vector> calc(Vector, Vector) override;
+    pair<double, Vector> calc(Vector y_true, Vector y_pred) override;
 };
 
 

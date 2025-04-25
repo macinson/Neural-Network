@@ -14,6 +14,7 @@
 #include "ActivationFunc/SoftMax.h"
 #include "Common/Initialization.h"
 #include "Common/UsefulMethods.h"
+#include "CostFunc/CrossEntropy.h"
 #include "CostFunc/MSE.h"
 
 using namespace std;
@@ -26,31 +27,26 @@ int main() {
     TrainingSet trainingSet = TrainingSet::mnist();
     trainingSet.shuffle(10);
 
-    TrainingSet test = trainingSet.firstN(3000);
+    TrainingSet test = trainingSet.firstN(2000);
 
-    default_random_engine generator;
-    uniform_real_distribution<double> distribution1(-sqrt(6.0/(784 + 16)), -sqrt(6.0/(784 + 16)));
-    uniform_real_distribution<double> distribution2(-sqrt(6.0/(16 + 16)), -sqrt(6.0/(16 + 16)));
-    uniform_real_distribution<double> distribution3(-sqrt(6.0/(10 + 16)), -sqrt(6.0/(10 + 16)));
+    Initialization firstInit(784,16);
+    Initialization secondInit(16,16);
+    Initialization thirdInit(16,10);
 
-    // Initialization firstInit(784,16);
-    // Initialization secondInit(16,16);
-    // Initialization thirdInit(16,10);
-
-    Layer l1(784,16, &random, []() {return 0.0;});
-    Layer l2(16,16, &random, []() {return 0.0;});
-    Layer l3(16,10, &random, []() {return 0.0;});
+    Layer l1(784,16, [&]() {return firstInit.glorot();}, []() {return 0.0;});
+    Layer l2(16,16, [&]() {return secondInit.glorot();}, []() {return 0.0;});
+    Layer l3(16,10, [&]() {return thirdInit.glorot();}, []() {return 0.0;});
 
     Activation* a1 = new ReLu(0.01);
     Activation* a2 = new ReLu(0.01);
     Activation* a3 = new SoftMax();
 
-    Cost* mse = new MSE();
+    Cost* cost = new MSE();
 
 
     NeuralNetwork network ({l1,l2,l3},{a1,a2,a3});
 
-    auto res = network.train(test,0.1,mse,10);
+    auto res = network.train(test,0.1,cost,10);
 
     cout << network.output(trainingSet.getInput()->at(0)).toString(2) << endl;
     cout << trainingSet.getOutput()->at(0).toString(2) << endl;
@@ -63,7 +59,7 @@ int main() {
     delete a2;
     delete a3;
 
-    delete mse;
+    delete cost;
 
     return 0;
 }

@@ -116,11 +116,11 @@ Matrix Matrix::operator*(double scalar) {
     return Matrix(columns);
 }
 
-Matrix::Matrix(int m, int n, double (*random)()) {
+Matrix::Matrix(int m, int n, const function<double()>& init) {
     for(int i = 0; i < n; i++){
         Vector column({});
         for(int j = 0; j < m; j++){
-            column.addEntry(random());
+            column.addEntry(init());
         }
         columns.emplace_back(column);
     }

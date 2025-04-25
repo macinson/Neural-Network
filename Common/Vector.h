@@ -17,7 +17,7 @@ private:
     int size;
 public:
     explicit Vector(vector<double> components);
-    Vector(int n, double (*random)());
+    Vector(int n, const function<double()>& init);
     static Vector commaSeperatedToVector(string s);
 
     vector<double> getComponents() { return components; }
@@ -34,6 +34,8 @@ public:
 
     Vector operator*(Vector other);
 
+    Vector operator/(Vector other);
+
     string toString(int precision);
 
     double getComponent(int index);
@@ -42,8 +44,6 @@ public:
 
     double addEntry(double d);
 
-    Vector activation(double (*func)(double));
-
     Vector subVector(int begin, int end);
 
     Vector append(Vector other);
@@ -51,6 +51,8 @@ public:
     double sum();
 
     Vector apply(function<double(double)>);
+
+    Vector clip(double min = 0, double max = 1);
 };
 
 

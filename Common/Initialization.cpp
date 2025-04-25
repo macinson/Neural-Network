@@ -10,7 +10,7 @@ Initialization::Initialization(int in_f, int out_f): in_f(in_f), out_f(out_f) {
 
 
 double Initialization::glorot() {
-    uniform_real_distribution<double> distribution(-sqrt(6.0/(in_f + out_f)), -sqrt(6.0/(in_f + out_f)));
+    uniform_real_distribution<double> distribution(-sqrt(6.0/(in_f + out_f)), sqrt(6.0/(in_f + out_f)));
     return distribution(generator);
 }
 

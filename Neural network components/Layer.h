@@ -16,11 +16,11 @@ private:
     Vector nodes;
     Matrix weightGrad;
     Vector biasGrad;
-    double (*wieghtInit)();
-    double (*biasInit)();
+    function<double()> weightInit;
+    function<double()> biasInit;
 
 public:
-    Layer(int, int, double (*weightInit)(), double (*biasInit)());
+    Layer(int, int, const function<double()>& weightInit, const function<double()>& biasInit);
 
     Vector forward(Vector input);
 

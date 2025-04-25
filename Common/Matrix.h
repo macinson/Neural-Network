@@ -30,7 +30,7 @@ public:
     int getM(){return m;}
     Vector getColumn(int i){return columns.at(i);}
     vector<Vector> getColumns(){return columns;}
-    Matrix(int m, int n, double (*random)());
+    Matrix(int m, int n, const function<double()>& init);
     void addColumn(Vector column);
     Matrix transpose();
     [[nodiscard]] static Matrix diagonalize(Vector);

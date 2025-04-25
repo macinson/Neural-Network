@@ -4,6 +4,7 @@
 
 #include "SoftMax.h"
 #include <cmath>
+#include <iostream>
 
 #include "../Common/Matrix.h"
 

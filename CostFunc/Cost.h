@@ -13,7 +13,7 @@ using namespace std;
 
 class Cost {
 public:
-    virtual pair<double,Vector> calc(Vector, Vector) = 0;
+    virtual pair<double,Vector> calc(Vector y_true, Vector y_pred) = 0;
 };
 
 

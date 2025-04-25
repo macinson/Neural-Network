@@ -31,4 +31,6 @@ add_executable(cpp main.cpp
         ActivationFunc/SoftMax.h
         ActivationFunc/ReLu.cpp
         ActivationFunc/ReLu.h
+        CostFunc/CrossEntropy.cpp
+        CostFunc/CrossEntropy.h
 )

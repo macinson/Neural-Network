@@ -7,7 +7,7 @@
 #include <utility>
 #include "../Common/UsefulMethods.h"
 
-Layer::Layer(int in_f, int out_f, double (*weightInit)(), double (*biasInit)()): inWeights(Matrix(out_f,in_f,weightInit)), biases(Vector(out_f, biasInit)), nodes(Vector({})), weightGrad({}), biasGrad({}), wieghtInit(weightInit), biasInit(biasInit) {}
+Layer::Layer(int in_f, int out_f, const function<double()>& weightInit, const function<double()>& biasInit): inWeights(Matrix(out_f,in_f,weightInit)), biases(Vector(out_f, biasInit)), nodes(Vector({})), weightGrad({}), biasGrad({}), weightInit(weightInit), biasInit(biasInit) {}
 
 
 Vector Layer::forward(Vector input) {
